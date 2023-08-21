@@ -21,7 +21,7 @@ export const App = () => {
     const json = localStorage.getItem(localStorageKey);
     const carentContacts = JSON.parse(json) || [];
     if (carentContacts.length > 0) {
-      setContacts([...contacts, ...carentContacts]);
+      setContacts([ ...carentContacts]);
     }
   }, []);
 
