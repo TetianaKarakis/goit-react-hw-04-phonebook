@@ -1,29 +1,28 @@
+import React from 'react';
 import PropTypes from 'prop-types';
+import css from './ContactList.module.css';
 
-import s from '../ContactList/ContactList.module.css';
-
-export const ContactList = ({ contacts, children, deleteContact }) => {
+export const ContactList = ({ contacts, deleteContact }) => {
   return (
-    <div className={s.contacts}>
-      <h2>Contacts</h2>
-      {children}
-      <ul className={s.contacts__list}>
-        {contacts.map(({ id, name, number }) => (
-          <li className={s.contacts__item} key={id}>
-            <p className={s.contacts__name}>{name}</p>
-            <p className={s.contacts__number}> {number}</p>
+    <ul className={css.list}>
+      {contacts?.map(({ id, name, number }) => {
+        return (
+          <li className={css.contactItem} key={id}>
+            <span className={css.spanName}>{name}:</span>
+            <span className={css.spanNumber}>{number}</span>
             <button
+              className={css.button}
+              type="button"
               onClick={() => {
                 deleteContact(id);
               }}
-              className={s.contacts__btn}
             >
               Delete
             </button>
           </li>
-        ))}
-      </ul>
-    </div>
+        );
+      })}
+    </ul>
   );
 };
 
@@ -33,7 +32,7 @@ ContactList.propTypes = {
       id: PropTypes.string.isRequired,
       name: PropTypes.string.isRequired,
       number: PropTypes.string.isRequired,
-    })
+    }).isRequired
   ),
-  deleteContact: PropTypes.func,
+  deleteContact: PropTypes.func.isRequired,
 };

@@ -1,25 +1,27 @@
 
+import { Component } from 'react';
 import { nanoid } from 'nanoid';
 import PropTypes from 'prop-types';
 
 import s from '../ContactForm/ContactForm.module.css';
 
-export const ContactForm = (props) => {
- const handleFormSubmit = event =>  {
+export class ContactForm extends Component {
+  handleFormSubmit = event => {
     event.preventDefault();
 
     const name = event.target.name.value;
     const number = event.target.number.value;
-    const { addContact } = props;
+    const { addContact } = this.props;
 
     addContact({ id: nanoid(), name, number });
     event.target.reset();
   };
 
+  render() {
     return (
       <section className={s.form}>
         <h1 className={s.form__title}>Phonebook</h1>
-        <form className={s.form__container} onSubmit={handleFormSubmit}>
+        <form className={s.form__container} onSubmit={this.handleFormSubmit}>
           <label className={s.form__label}>Name</label>
           <input
             type="text"
@@ -46,7 +48,7 @@ export const ContactForm = (props) => {
         </form>
       </section>
     );
-  
+  }
 }
 
 ContactForm.propTypes = {
