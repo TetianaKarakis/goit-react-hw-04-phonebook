@@ -1,38 +1,33 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import css from './ContactList.module.css';
+import { List, Item, Button } from './ContactList.styled';
+import { ReactComponent as DeleteIcon } from '../icons/delete.svg';
 
-export const ContactList = ({ contacts, deleteContact }) => {
-  return (
-    <ul className={css.list}>
-      {contacts?.map(({ id, name, number }) => {
-        return (
-          <li className={css.contactItem} key={id}>
-            <span className={css.spanName}>{name}:</span>
-            <span className={css.spanNumber}>{number}</span>
-            <button
-              className={css.button}
-              type="button"
-              onClick={() => {
-                deleteContact(id);
-              }}
-            >
-              Delete
-            </button>
-          </li>
-        );
-      })}
-    </ul>
-  );
-};
+
+const ContactList = ({ contacts, onRemoveContact }) => (
+  <List>
+    {contacts.map(contact => (
+      <Item key={contact.id}>
+        {contact.name + ' : ' + contact.number}
+        {
+         
+          <Button
+            type="button"
+            name="delete"
+            onClick={() => onRemoveContact(contact.id)}
+          >
+            <DeleteIcon fill="#000000" width="20" height="20" />
+            delete
+          </Button>
+        }
+      </Item>
+    ))}
+  </List>
+);
 
 ContactList.propTypes = {
-  contacts: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-      number: PropTypes.string.isRequired,
-    }).isRequired
-  ),
-  deleteContact: PropTypes.func.isRequired,
+  contacts: PropTypes.object.isRequired,
+  onRemoveContact: PropTypes.func.isRequired,
 };
+
+export default ContactList;
